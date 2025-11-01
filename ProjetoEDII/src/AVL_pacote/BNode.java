@@ -1,9 +1,10 @@
 class BNode{
-    private BNode esq, dir, pai;
-    private int valor, FB;
+    private BNode left, right, parent;
+    private int FB;
+    private double valorSimilaridade;
 
-    public BNode(int valor){
-        this.valor = valor;
+    public BNode(double valorSimilaridade){
+        this.valorSimilaridade = valorSimilaridade;
         this.FB = 0;
     }
 
@@ -111,8 +112,8 @@ class BNode{
 
 
     //Getters & Setters
-    public int getValor() {
-        return valor;
+    public double getValorSimilaridade() {
+        return valorSimilaridade;
     }
 
     public void setFB(int FB) { this.FB = FB; }
@@ -127,8 +128,8 @@ class BNode{
         return right;
     }
 
-    public void setValor(int valor) {
-        this.valor = valor;
+    public void setValorSimilaridade(int valorSimilaridade) {
+        this.valorSimilaridade = valorSimilaridade;
     }
 
     public void setLeft(BNode left) {
