@@ -1,11 +1,51 @@
 class BNode{
     private BNode left, right, parent;
     private int FB;
-    private double valorSimilaridade;
 
-    public BNode(double valorSimilaridade){
-        this.valorSimilaridade = valorSimilaridade;
+    private double chave;
+    private ArrayList<Resultado> result;
+
+    public BNode(double valorSimilaridade, ArrayList<Resultado> result)
+        this.chave = valorSimilaridade
+        this.result = result;
         this.FB = 0;
+    }
+
+    //Getters & Setters
+    public double getValorSimilaridade() {
+        return valorSimilaridade;
+    }
+
+    public void setFB(int FB) { this.FB = FB; }
+
+    public int getFB() { return FB; }
+
+    public BNode getLeft() {
+        return left;
+    }
+
+    public BNode getRight() {
+        return right;
+    }
+
+    public void setValorSimilaridade(int valorSimilaridade) {
+        this.valorSimilaridade = valorSimilaridade;
+    }
+
+    public void setLeft(BNode left) {
+        this.left = left;
+    }
+
+    public void setRight(BNode right) {
+        this.right = right;
+    }
+
+    public BNode getParent() {
+        return parent;
+    }
+
+    public void setParent(BNode parent) {
+        this.parent = parent;
     }
 
     //Métodos
@@ -109,42 +149,4 @@ class BNode{
         return 1 + Math.max(getHeightRec(atual.left), getHeightRec(atual.right));
     }
 
-
-
-    //Getters & Setters
-    public double getValorSimilaridade() {
-        return valorSimilaridade;
-    }
-
-    public void setFB(int FB) { this.FB = FB; }
-
-    public int getFB() { return FB; }
-
-    public BNode getLeft() {
-        return left;
-    }
-
-    public BNode getRight() {
-        return right;
-    }
-
-    public void setValorSimilaridade(int valorSimilaridade) {
-        this.valorSimilaridade = valorSimilaridade;
-    }
-
-    public void setLeft(BNode left) {
-        this.left = left;
-    }
-
-    public void setRight(BNode right) {
-        this.right = right;
-    }
-
-    public BNode getParent() {
-        return parent;
-    }
-
-    public void setParent(BNode parent) {
-        this.parent = parent;
-    }
 }
