@@ -11,15 +11,23 @@ public class BNode{
     private double key;
     private ArrayList<Resultado> result;
 
-    public BNode(double key, ArrayList<Resultado> result){
+    public BNode(double key){ //construtor principal
         this.key = key;
-        this.result = result;
+        this.result = new ArrayList<>();
         this.FB = 0;
+    }
+    
+    public BNode(double key, Resultado result){ //Construtor para passar primeiro resultado quando criar
+        this(key); //chama o contrutor anterior
+        this.result.add(result);
     }
 
     //Getters & Setters
     public double getKey() { return key; }
     public void setkey(double key) { this.key = key; }
+
+    public ArrayList<Resultado> getArrResult() { return result; }
+    public void setArrResult(ArrayList<Resultado> result) { this.result = result; }
 
     public int getFB() { return FB; }
     public void setFB(int FB) { this.FB = FB; }

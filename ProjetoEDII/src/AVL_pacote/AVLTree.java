@@ -1,24 +1,26 @@
 package AVL_pacote;
-import java.util.ArrayList;
 import model.Resultado;
 
 public class AVLTree{
     private BNode root;
 
-    public AVLTree(BNode root){
-        this.root = root;
+    public AVLTree(){ //inicializa a arvore vazia
+        this.root = null;
     }
 
-    public void insert(double valor, ArrayList<Resultado> result) {
-        this.root = (insert(root, valor, result));
+    public void insert(double key, Resultado result) {
+        this.root = (insert(root, key, result));
     }
 
-    public BNode insert(BNode no, double key, ArrayList<Resultado> result){
+    public BNode insert(BNode no, double key, Resultado result){
         if (no == null) {
             return new BNode(key, result);
         }
 
-        if(no.getKey() > key){
+        if(no.getKey() == key){ //Caso já exista esse valor na arvore, ele só adiciona na lista resultado
+            no.getArrResult().add(result);
+            return no;
+        }else if(no.getKey() > key){
             no.setLeft(insert(no.getLeft(), key, result));
             if (no.getLeft() != null) no.getLeft().setParent(no);
         }else{
@@ -72,7 +74,7 @@ public class AVLTree{
 
         return no;
     }
-
+    //========= Metodos para Rotação =========
     //O parametro "no" é a raiz da subarvore que precisa ser balanceada
     public BNode rotateRight(BNode no){
         System.out.println("→ Rotação Simples à Direita (RR)");
@@ -151,7 +153,7 @@ public class AVLTree{
         return no;
     }
 
-    //Metodos auxiliares
+    //========= Metodos auxiliares =========
     public BNode findMin(BNode no){
         while(no.getLeft() != null){
             no = no.getLeft();
@@ -174,5 +176,14 @@ public class AVLTree{
 
     public void updateBalance(BNode no){ //Atualiza o fator de Balanceamento
         no.setFB(getBalance(no));
+    }
+
+    //========= Getter & Setter =========
+    public BNode getRoot(){
+        return root;
+    }    
+
+    public void setRoot(BNode root){
+        this.root = root;
     }
 }

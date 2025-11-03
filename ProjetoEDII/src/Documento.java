@@ -17,13 +17,14 @@ public class Documento {
             FileReader leitor = new FileReader(docName); 
             BufferedReader br = new BufferedReader(leitor);
 
-            String line = br.readLine(); //Lê a primeira linha
+            String line = br.readLine(); //Le a primeira linha
 
             while(line != null){
                 System.out.println(line);
                 line = br.readLine();
             }
 
+            br.close();
         }catch (IOException e){
             System.out.println("Erro! " + e.getMessage());
         } 
