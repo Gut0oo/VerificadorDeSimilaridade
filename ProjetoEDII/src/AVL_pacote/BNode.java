@@ -1,53 +1,39 @@
-class BNode{
+package AVL_pacote;
+
+import java.util.ArrayList;
+
+import model.Resultado;
+
+public class BNode{
     private BNode left, right, parent;
     private int FB;
 
-    private double chave;
+    private double key;
     private ArrayList<Resultado> result;
 
-    public BNode(double valorSimilaridade, ArrayList<Resultado> result)
-        this.chave = valorSimilaridade
+    public BNode(double key, ArrayList<Resultado> result){
+        this.key = key;
         this.result = result;
         this.FB = 0;
     }
 
     //Getters & Setters
-    public double getValorSimilaridade() {
-        return valorSimilaridade;
-    }
-
-    public void setFB(int FB) { this.FB = FB; }
+    public double getKey() { return key; }
+    public void setkey(double key) { this.key = key; }
 
     public int getFB() { return FB; }
+    public void setFB(int FB) { this.FB = FB; }
 
-    public BNode getLeft() {
-        return left;
-    }
+    public BNode getLeft() { return left; }
+    public void setLeft(BNode left) { this.left = left; }
 
-    public BNode getRight() {
-        return right;
-    }
+    public BNode getRight() { return right; }
+    public void setRight(BNode right) { this.right = right; }
 
-    public void setValorSimilaridade(int valorSimilaridade) {
-        this.valorSimilaridade = valorSimilaridade;
-    }
+    public BNode getParent() { return parent; }
+    public void setParent(BNode parent) { this.parent = parent; }
 
-    public void setLeft(BNode left) {
-        this.left = left;
-    }
-
-    public void setRight(BNode right) {
-        this.right = right;
-    }
-
-    public BNode getParent() {
-        return parent;
-    }
-
-    public void setParent(BNode parent) {
-        this.parent = parent;
-    }
-
+    
     //Métodos
     public boolean isRoot(){
         return this.parent == null;
@@ -57,96 +43,26 @@ class BNode{
         return this.left == null && this.right == null;
     }
 
+    
     public int getDegree(){
-        int count = 0;
-
-        if(this.left != null){
-            count++;
-        }
-
-        if(this.right != null){
-            count++;
-        }
-
-        return count;
+        return ((left != null) ? 1 : 0) + ((right != null) ? 1 : 0);
     }
+    
 
-    //Uma outra forma de escrever o getDegree():
-    /*
-    public int getDegree(){
-        return ((left != null) ? 1 : 0) + ((right != null) ? 1 : 0)
-    }
-    */
-
-    public int getLevelInte(){
-        BNode atual = this;
-        int count = 0;
-
-        while(atual.parent != null){
-            atual = atual.parent;
-            count++;
-        }
-
-        return count;
-    }
-
-    public int getLevelRecu(BNode atual){
+    public int getLevel(BNode atual){
         if(atual.parent == null){
             return 0;
         }
 
-        return 1 + getLevelRecu(atual.parent);
+        return 1 + getLevel(atual.parent);
     }
 
-    public int getHeightInte(){
-        BNode atual = this; //Onde eu estou
-        BNode anterior = null; //De onde eu vim
-        BNode prox = null; //Para onde eu vou
-
-        int prof_atual = 0;
-        int altura_max = 0;
-
-        while(atual != null){
-            //Usando a Ideia de PosOrdem
-            if(anterior == atual.parent){ //Veio do pai
-                if(atual.left != null){
-                    prox = atual.left;
-                }else if(atual.right != null){
-                    prox = atual.right;
-                }else{
-                    prox = atual.parent;
-                }
-            } else if(anterior == atual.left){ //Veio da Esquerda
-                if(atual.right != null){
-                    prox = atual.right;
-                }else{
-                    prox = atual.parent;
-                }
-            } else if(anterior == atual.right) { //Veio da Direita
-                prox = atual.parent;
-            }
-
-            if(prox == atual.left || prox == atual.right){
-                prof_atual ++;
-            }else if(prox == atual.parent){
-                prof_atual--;
-            }
-
-            altura_max = Math.max(altura_max, prof_atual);
-
-            anterior = atual;
-            atual = prox;
-        }
-
-        return altura_max;
-    }
-
-    public int getHeightRec(BNode atual){
+    public int getHeight(BNode atual){
         if(atual == null){ //Caso base, chegou alem da folha
             return 0;
         }
 
-        return 1 + Math.max(getHeightRec(atual.left), getHeightRec(atual.right));
+        return 1 + Math.max(getHeight(atual.left), getHeight(atual.right));
     }
 
 }

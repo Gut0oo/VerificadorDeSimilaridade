@@ -1,23 +1,28 @@
-public class AVLTreeRec{
+package AVL_pacote;
+import java.util.ArrayList;
+import model.Resultado;
 
-    public AVLTreeRec(BNode root){
-        super(root);
+public class AVLTree{
+    private BNode root;
+
+    public AVLTree(BNode root){
+        this.root = root;
     }
 
-    public void insert(int valor) {
-        setRoot(insertRec(getRoot(), valor));
+    public void insert(double valor, ArrayList<Resultado> result) {
+        this.root = (insert(root, valor, result));
     }
 
-    public BNode insert(BNode no, int valor){
+    public BNode insert(BNode no, double key, ArrayList<Resultado> result){
         if (no == null) {
-            return new BNode(valor);
+            return new BNode(key, result);
         }
 
-        if(no.getValor() > valor){
-            no.setLeft(insertRec(no.getLeft(), valor));
+        if(no.getKey() > key){
+            no.setLeft(insert(no.getLeft(), key, result));
             if (no.getLeft() != null) no.getLeft().setParent(no);
         }else{
-            no.setRight(insertRec(no.getRight(), valor));
+            no.setRight(insert(no.getRight(), key, result));
             if (no.getRight() != null) no.getRight().setParent(no);
         }
 
@@ -30,19 +35,19 @@ public class AVLTreeRec{
         return no;
     }
 
-    public void delete(int valor){
-        setRoot(delete(getRoot(), valor));
+    public void delete(double key){
+        this.root = (delete(root, key));
     }
 
-    public BNode delete(BNode no, int valor){
+    public BNode delete(BNode no, double key){
         if(no == null){
             return null;
         }
 
-        if(no.getValor() < valor){
-            no.setRight(delete(no.getRight(), valor));
-        }else if(no.getValor() > valor){
-            no.setLeft(delete(no.getLeft(), valor));
+        if(no.getKey() < key){
+            no.setRight(delete(no.getRight(), key));
+        }else if(no.getKey() > key){
+            no.setLeft(delete(no.getLeft(), key));
         }else{
             if(no.isLeaf()){
                 return null;
@@ -54,36 +59,15 @@ public class AVLTreeRec{
                 }
             }else {
                 BNode temp = findMin(no.getRight());
-                no.setValor(temp.getValor());
-                no.setRight(delete(no.getRight(), temp.getValor()));
+                no.setkey(temp.getKey());
+                no.setRight(delete(no.getRight(), temp.getKey()));
             }
         }
 
         updateBalance(no);
 
-
         if(no.getFB() < -1 || no.getFB() > 1){
             no = balanceHelper(no);
-        }
-
-        return no;
-    }
-
-    public BNode balanceHelper(BNode no){
-        if(no.getFB() > 1){ //Desbalanceamento para o lado esquerdo
-            if(no.getLeft() != null && no.getLeft().getFB() >= 0){
-                return rotateRight(no);
-            }else if(no.getLeft() != null && no.getLeft().getFB() < 0){
-                return rotateLeftRight(no);
-            }
-        }
-
-        if(no.getFB() < -1){ //Desbalanceamento para o lado direito
-            if(no.getRight() != null && no.getRight().getFB() <= 0){
-                return rotateLeft(no);
-            }else if(no.getRight() != null && no.getRight().getFB() > 0){
-                return rotateRightLeft(no);
-            }
         }
 
         return no;
@@ -107,7 +91,7 @@ public class AVLTreeRec{
         updateBalance(esq);
 
         if(ehraiz){
-            setRoot(esq);
+            this.root = esq;
         }
 
         return esq;
@@ -130,7 +114,7 @@ public class AVLTreeRec{
         updateBalance(dir);
         
         if(ehraiz){
-            setRoot(dir);
+            this.root = dir;
         }
         return dir;
     }
@@ -145,6 +129,35 @@ public class AVLTreeRec{
         System.out.println("→ Rotação Dupla Direita-Esquerda (RL)");
         no.setRight(rotateRight(no.getRight()));
         return rotateLeft(no);
+    }
+
+    public BNode balanceHelper(BNode no){
+        if(no.getFB() > 1){ //Desbalanceamento para o lado esquerdo
+            if(no.getLeft() != null && no.getLeft().getFB() >= 0){
+                return rotateRight(no);
+            }else if(no.getLeft() != null && no.getLeft().getFB() < 0){
+                return rotateLeftRight(no);
+            }
+        }
+
+        if(no.getFB() < -1){ //Desbalanceamento para o lado direito
+            if(no.getRight() != null && no.getRight().getFB() <= 0){
+                return rotateLeft(no);
+            }else if(no.getRight() != null && no.getRight().getFB() > 0){
+                return rotateRightLeft(no);
+            }
+        }
+
+        return no;
+    }
+
+    //Metodos auxiliares
+    public BNode findMin(BNode no){
+        while(no.getLeft() != null){
+            no = no.getLeft();
+        }
+
+        return no;
     }
 
     public int getHeight(BNode no){
