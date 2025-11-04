@@ -1,12 +1,15 @@
+package Docs;
 //Classe com a logica de ler documentos e coletar seus dados
 import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import Hash.HashTable;
 
 public class Documento {
     private String docName;
+    private HashTable tabela;
 
     public Documento(String docName){
         this.docName = docName;
