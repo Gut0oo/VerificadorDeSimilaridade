@@ -1,4 +1,4 @@
-package AVL_pacote;
+package AVL;
 import model.Resultado;
 
 public class AVLTree{
@@ -37,43 +37,6 @@ public class AVLTree{
         return no;
     }
 
-    public void delete(double key){
-        this.root = (delete(root, key));
-    }
-
-    public BNode delete(BNode no, double key){
-        if(no == null){
-            return null;
-        }
-
-        if(no.getKey() < key){
-            no.setRight(delete(no.getRight(), key));
-        }else if(no.getKey() > key){
-            no.setLeft(delete(no.getLeft(), key));
-        }else{
-            if(no.isLeaf()){
-                return null;
-            }else if(no.getDegree() == 1){
-                if(no.getLeft() != null){
-                    return no.getLeft();
-                }else{
-                    return no.getRight();
-                }
-            }else {
-                BNode temp = findMin(no.getRight());
-                no.setkey(temp.getKey());
-                no.setRight(delete(no.getRight(), temp.getKey()));
-            }
-        }
-
-        updateBalance(no);
-
-        if(no.getFB() < -1 || no.getFB() > 1){
-            no = balanceHelper(no);
-        }
-
-        return no;
-    }
     //========= Metodos para Rotação =========
     //O parametro "no" é a raiz da subarvore que precisa ser balanceada
     public BNode rotateRight(BNode no){

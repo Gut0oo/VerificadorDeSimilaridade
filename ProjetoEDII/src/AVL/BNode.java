@@ -1,4 +1,4 @@
-package AVL_pacote;
+package AVL;
 
 import java.util.ArrayList;
 
