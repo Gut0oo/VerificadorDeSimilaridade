@@ -1,5 +1,8 @@
 package model;
 
+import Docs.ComparadorDeDocumentos;
+import Docs.Documento;
+
 public class Resultado {
     private double similaridade;
     private String doc1, doc2; //nome dos arquivos que foram comparados
@@ -7,7 +10,13 @@ public class Resultado {
     public Resultado(String doc1, String doc2){
         this.doc1 = doc1;
         this.doc2 = doc2;
-        this.similaridade = 0.0;
+
+        Documento documento1 = new Documento(doc1);
+        documento1.leitorArquivo();
+        Documento documento2 = new Documento(doc2);
+        documento2.leitorArquivo();
+        
+        this.similaridade = ComparadorDeDocumentos.calculoSimilaridade(documento1, documento2);
     }
 
 

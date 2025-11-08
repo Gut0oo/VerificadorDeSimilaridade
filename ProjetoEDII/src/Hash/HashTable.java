@@ -3,34 +3,43 @@ package Hash;
 import java.util.LinkedList;
 
 public class HashTable{
+    private LinkedList<Node>[] tabelaHash; //um array de lista ligada
+    private int contColisao;
     private int tam;
-    private LinkedList<Node>[] tabela; //um array de lista ligada
 
     public HashTable(int tam){
-        tabela = new LinkedList[tam];
+        tabelaHash = new LinkedList[tam];//cria o array
+        for(int i = 0; i < tam; i++){ //inicializa cada indice com uma lista ligada - evita erro nullPointer
+            tabelaHash[i] = new LinkedList<>();
+        }
+    
         this.tam = tam;
+        this.contColisao = 0;
     }
 
-    public void inserir(String palavra, int freq){
+    public void put(String palavra, int freq){
         int index = metodoDivisao(palavra); //calcula o indice a ser inserido
         Node no = new Node(palavra, freq);
 
-        tabela[index].addFirst(no); //adiciona no inicio da lista -> O(1)
+        if(!tabelaHash[index].isEmpty()){ //verifica se a lista ligada não está vazia para contar as colisões
+            contColisao++;
+        }
+
+        tabelaHash[index].addFirst(no); //adiciona no inicio da lista -> O(1)
     }
 
-    public Node buscas(String palavra){
+    public Node get(String palavra){
         int index = metodoDivisao(palavra); //Pega o index que está a palavra
-        int tam = tabela[index].size();
+        int tam = tabelaHash[index].size();
 
         Node no = null;
 
         for(int i = 0; i < tam; i++){
-            if(tabela[index].get(i).getPalavra().equals(palavra)){
-                no = tabela[index].get(i);
+            if(tabelaHash[index].get(i).getPalavra().equals(palavra)){
+                no = tabelaHash[index].get(i);
                 break;
             }
         }
-
         
         return no;
     }
@@ -54,5 +63,15 @@ public class HashTable{
 
     public int metodoX(){
         return 0;
+    }
+
+    //Getter e Setters
+
+    public LinkedList<Node>[] getTabelaHash(){
+        return tabelaHash;
+    }
+
+    public int getTam(){
+        return tam;
     }
 }
