@@ -1,4 +1,6 @@
 package AVL;
+import java.util.ArrayList;
+
 import model.Resultado;
 
 public class AVLTree{
@@ -35,6 +37,22 @@ public class AVLTree{
         }
 
         return no;
+    }
+
+    public BNode search(String doc1, String doc2, BNode atual){ //metodo que busca o nó com os docs comparados
+        if(atual != null){ //posOrder
+            search(doc1, doc2, atual.getLeft());
+            search(doc1, doc2, atual.getRight());
+
+            ArrayList<Resultado> res = atual.getArrResult();
+            for(int i = 0; i < res.size(); i++){ //percorre toda o array
+                if(res.get(i).getDoc1().equals(doc1) && res.get(i).getDoc2().equals(doc2)){ //verifica cada indice buscando os docs no nó
+                    return atual;
+                }
+            }
+        }
+
+        return null; //retorna null se não encontrar
     }
 
     //========= Metodos para Rotação =========

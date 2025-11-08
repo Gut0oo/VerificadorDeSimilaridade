@@ -19,7 +19,19 @@ public class HashTable{
     }
 
     public Node buscas(String palavra){
-        Node  no = null;
+        int index = metodoDivisao(palavra); //Pega o index que está a palavra
+        int tam = tabela[index].size();
+
+        Node no = null;
+
+        for(int i = 0; i < tam; i++){
+            if(tabela[index].get(i).getPalavra().equals(palavra)){
+                no = tabela[index].get(i);
+                break;
+            }
+        }
+
+        
         return no;
     }
 
