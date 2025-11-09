@@ -7,16 +7,10 @@ public class Resultado {
     private double similaridade;
     private String doc1, doc2; //nome dos arquivos que foram comparados
 
-    public Resultado(String doc1, String doc2){
+    public Resultado(String doc1, String doc2, double similaridade){
         this.doc1 = doc1;
         this.doc2 = doc2;
-
-        Documento documento1 = new Documento(doc1);
-        documento1.leitorArquivo();
-        Documento documento2 = new Documento(doc2);
-        documento2.leitorArquivo();
-        
-        this.similaridade = ComparadorDeDocumentos.calculoSimilaridade(documento1, documento2);
+        this.similaridade = similaridade;
     }
 
 
@@ -29,4 +23,11 @@ public class Resultado {
 
     public String getDoc2(){ return doc2; }
     public void setDoc2(String doc2){ this.doc2 = doc2; }
+
+    //toString
+
+    @Override
+    public String toString(){
+        return getDoc1() + " <-> " + getDoc2() + "  = " + getSimilaridade() + "\n";
+    }
 }

@@ -44,21 +44,17 @@ public class HashTable{
         return no;
     }
 
-    
-
     //Metodo de divisão
     public int metodoDivisao(String dado){
         int stringTam = dado.length(); //guarda o tamanho da string
 
         int hash = (int) dado.charAt(0);
 
-        for(int i = 0; i < stringTam; i++){
-            hash += (int) dado.charAt(i); //soma o codigo Ascii de cada codigo
-        }
+        for(int i = 1; i < stringTam; i++){
+            hash = (31 * hash) + dado.charAt(i); //31 eh primo, assim dando uma melhor dispersão 
+        }//o numero primo eh mlr pq não tem divisores alem de 1 e ele mesmo, assim evitando padrões de repetição
 
-        hash *= hash; //Elevando a 2 para trazer uma melhor distribuição na tabela
-
-        return (hash % tam);
+        return Math.abs(hash % tam); //evita numero negatvios caso hash estoure o limite
     }
 
     public int metodoX(){

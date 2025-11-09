@@ -73,4 +73,9 @@ public class BNode{
         return 1 + Math.max(getHeight(atual.left), getHeight(atual.right));
     }
 
+    public void exibir() {
+        for (Resultado r : result) {
+            System.out.println(r);
+        }
+    }
 }

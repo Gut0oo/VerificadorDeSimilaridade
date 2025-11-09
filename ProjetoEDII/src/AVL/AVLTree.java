@@ -38,21 +38,62 @@ public class AVLTree{
 
         return no;
     }
+    /*
+    private BNode search(double similariade, BNode atual){
+        if(atual == null){
+            return null;
+        }
 
-    public BNode search(String doc1, String doc2, BNode atual){ //metodo que busca o nó com os docs comparados
-        if(atual != null){ //posOrder
-            search(doc1, doc2, atual.getLeft());
-            search(doc1, doc2, atual.getRight());
+        if(atual.getKey() == similariade){
+            return atual;
+        }else if(atual.getKey() > similariade){
+            return search(similariade, atual.getLeft());
+        }else if(atual.getKey() < similariade){
+            return search(similariade, atual.getRight());
+        }else{
+            return null;//não encontrou
+        }
+    }
+    */
 
-            ArrayList<Resultado> res = atual.getArrResult();
-            for(int i = 0; i < res.size(); i++){ //percorre toda o array
-                if(res.get(i).getDoc1().equals(doc1) && res.get(i).getDoc2().equals(doc2)){ //verifica cada indice buscando os docs no nó
-                    return atual;
-                }
+    public BNode search(String doc1, String doc2, BNode no){
+        if (no == null) {
+            return null;
+        }
+
+        ArrayList<Resultado> resultados = no.getArrResult();
+
+        for (Resultado r : resultados) {
+
+            if ((r.getDoc1().equals(doc1) && r.getDoc2().equals(doc2)) || (r.getDoc1().equals(doc2) && r.getDoc2().equals(doc1)) ) {//verifica as duas ordens possíveis
+                System.out.println(r.toString());
+                return no;
             }
         }
 
-        return null; //retorna null se não encontrar
+        BNode encontrado = search(doc1, doc2, no.getLeft());//Aqui vai buscar na subarvore a esquerda
+        if (encontrado != null) {
+            return encontrado;
+        }
+
+        encontrado = search(doc1, doc2, no.getRight());//Aqui vai buscar na subarvore a direita
+        if (encontrado != null) {
+            return encontrado;
+        }
+
+        return null;//Se não encontro, retorna null
+    }
+
+    public void searchMaiores(double similaridade, BNode no){ //Esse search vai ser para buscar os nós com maiores similaridade 
+        if(no != null){
+            searchMaiores(similaridade, no.getLeft());
+            if(no.getKey() >= similaridade) no.exibir();
+            searchMaiores(similaridade, no.getRight());
+        }
+    }
+
+    public BNode searchMenor(BNode menor){ //Busca o menor
+        return findMin(menor);
     }
 
     //========= Metodos para Rotação =========
@@ -166,5 +207,15 @@ public class AVLTree{
 
     public void setRoot(BNode root){
         this.root = root;
+    }
+
+    //exibição
+
+    private void posOrder(BNode no){
+        if(no != null){
+            posOrder(no.getLeft());
+            posOrder(no.getRight());
+            no.exibir();
+        }
     }
 }
