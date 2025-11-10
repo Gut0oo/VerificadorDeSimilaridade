@@ -19,13 +19,19 @@ public class HashTable{
 
     public void put(String palavra, int freq){
         int index = metodoDivisao(palavra); //calcula o indice a ser inserido
-        Node no = new Node(palavra, freq);
+
+        for(Node no : tabelaHash[index]){
+            if(no.getPalavra().equals(palavra)){ //Aqui verfica se já existe o nó 
+                no.setFreq(no.getFreq() + freq);//Se sim, apenas atualiza a frequencia
+                return;
+            }
+        }
 
         if(!tabelaHash[index].isEmpty()){ //verifica se a lista ligada não está vazia para contar as colisões
             contColisao++;
         }
 
-        tabelaHash[index].addFirst(no); //adiciona no inicio da lista -> O(1)
+        tabelaHash[index].addFirst(new Node(palavra, freq)); //adiciona no inicio da lista -> O(1)
     }
 
     public Node get(String palavra){
@@ -69,5 +75,9 @@ public class HashTable{
 
     public int getTam(){
         return tam;
+    }
+
+    public int getContColisao(){
+        return contColisao;
     }
 }

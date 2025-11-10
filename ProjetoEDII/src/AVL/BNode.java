@@ -78,4 +78,12 @@ public class BNode{
             System.out.println(r);
         }
     }
+
+    public String getResultadosComoTexto(){
+        StringBuilder sb = new StringBuilder();
+        for(Resultado r : result){
+            sb.append(r.toString()).append("\n");
+        }
+        return sb.toString();
+    }
 }

@@ -1,6 +1,5 @@
 package Docs;
 //Classe com a logica de ler documentos e coletar seus dados
-import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -65,12 +64,7 @@ public class Documento {
         for(String p : palavra){
             if(!p.isEmpty()){//evita possiveis strings vazias
                 if(!ehStopWord(p)){ //Verfica se não eh uma stopword
-                    Node no = tabelaHash.get(p); 
-                    if(no != null){//Verifica se já existe essa palavra na lista
-                        no.setFreq(no.getFreq() + 1); //se existir, apenas incrementar a frenquencia
-                    }else{
-                        tabelaHash.put(p, 1);//se não, inseri um novo nó na lista
-                    }
+                    tabelaHash.put(p, 1);//se não, insere um novo nó na lista
                 }
             }
         }

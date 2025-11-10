@@ -1,6 +1,7 @@
 package AVL;
 import java.util.ArrayList;
 
+import Main.App;
 import model.Resultado;
 
 public class AVLTree{
@@ -38,62 +39,90 @@ public class AVLTree{
 
         return no;
     }
-    /*
-    private BNode search(double similariade, BNode atual){
-        if(atual == null){
-            return null;
-        }
 
-        if(atual.getKey() == similariade){
-            return atual;
-        }else if(atual.getKey() > similariade){
-            return search(similariade, atual.getLeft());
-        }else if(atual.getKey() < similariade){
-            return search(similariade, atual.getRight());
-        }else{
-            return null;//não encontrou
-        }
+    public String montarStringDocs(String doc1, String doc2, BNode no){
+        StringBuilder sb = new StringBuilder();
+        searchDocs(doc1, doc2, no, sb);
+        return sb.toString();
     }
-    */
 
-    public BNode search(String doc1, String doc2, BNode no){
-        if (no == null) {
-            return null;
-        }
+    public BNode searchDocs(String doc1, String doc2, BNode no, StringBuilder sb){
+        if (no != null) {
+            ArrayList<Resultado> resultados = no.getArrResult();
 
-        ArrayList<Resultado> resultados = no.getArrResult();
+            for (Resultado r : resultados) {
+                String r1 = new java.io.File(r.getDoc1()).getName();
+                String r2 = new java.io.File(r.getDoc2()).getName();
 
-        for (Resultado r : resultados) {
+                if ((r1.equals(doc1) && r2.equals(doc2)) || (r1.equals(doc2) && r2.equals(doc1)) ) {//verifica as duas ordens possíveis
+                    sb.append(r.toString()).append("\n");
+                    return no;
+                }
+            }
 
-            if ((r.getDoc1().equals(doc1) && r.getDoc2().equals(doc2)) || (r.getDoc1().equals(doc2) && r.getDoc2().equals(doc1)) ) {//verifica as duas ordens possíveis
-                System.out.println(r.toString());
-                return no;
+            BNode encontrado = searchDocs(doc1, doc2, no.getLeft(), sb);//Aqui vai buscar na subarvore a esquerda
+            if (encontrado != null) {
+                return encontrado;
+            }
+
+            encontrado = searchDocs(doc1, doc2, no.getRight(), sb);//Aqui vai buscar na subarvore a direita
+            if (encontrado != null) {
+                return encontrado;
             }
         }
-
-        BNode encontrado = search(doc1, doc2, no.getLeft());//Aqui vai buscar na subarvore a esquerda
-        if (encontrado != null) {
-            return encontrado;
-        }
-
-        encontrado = search(doc1, doc2, no.getRight());//Aqui vai buscar na subarvore a direita
-        if (encontrado != null) {
-            return encontrado;
-        }
-
         return null;//Se não encontro, retorna null
     }
 
-    public void searchMaiores(double similaridade, BNode no){ //Esse search vai ser para buscar os nós com maiores similaridade 
+    private void searchTopK(double limiar, BNode no, ArrayList<BNode> temp ){
         if(no != null){
-            searchMaiores(similaridade, no.getLeft());
-            if(no.getKey() >= similaridade) no.exibir();
-            searchMaiores(similaridade, no.getRight());
+            searchTopK(limiar, no.getLeft(), temp);
+            if(no.getKey() >= limiar){
+                temp.add(no);
+            }
+            searchTopK(limiar, no.getRight(), temp);
         }
     }
 
-    public BNode searchMenor(BNode menor){ //Busca o menor
-        return findMin(menor);
+    
+    public String montarStringTopK(double similaridade, int k){
+        StringBuilder sb = new StringBuilder();
+        exibirTopK(similaridade, k, sb);
+        return sb.toString();
+    }
+
+    public void exibirTopK(double limiar, int k, StringBuilder sb){
+        ArrayList<BNode> temp = new ArrayList<>();
+        searchTopK(limiar, root, temp);
+
+        inverterOrdem(temp); //coloca na ordem decrescente
+        int max = Math.min(k, temp.size()); //pega o maximo que será impresso
+
+        sb.append("\n=== VERFICADOR DE SIMILARIDADE DE TEXTOS ===\n");
+        for(int i = 0; i < max; i++){
+            sb.append((temp.get(i).getResultadosComoTexto())).append("\n");
+        }
+        sb.append("Métrica de Similaridade: Cosseno\n");
+    }
+
+    public void searchLista(double similaridade, BNode no, StringBuilder sb){ //Esse search vai ser para buscar os nós com maiores similaridade 
+        if(no != null){
+            searchLista(similaridade, no.getLeft(), sb);
+            if(no.getKey() >= similaridade) {
+                sb.append(no.getResultadosComoTexto()); //salva no arquivo
+            }
+            searchLista(similaridade, no.getRight(), sb);
+        }
+    }
+
+    public String montarStringLista(double similaridade, BNode no){
+        StringBuilder sb = new StringBuilder();
+        searchLista(similaridade, no, sb);
+        return sb.toString();
+    }
+
+    public BNode searchMenor(BNode no){ //Busca o menor
+        if(no == null) return null;
+        return findMin(no);
     }
 
     //========= Metodos para Rotação =========
@@ -200,6 +229,18 @@ public class AVLTree{
         no.setFB(getBalance(no));
     }
 
+    public void inverterOrdem(ArrayList<BNode> temp){//metodo para inverter a ordem
+        for (int i = 0; i < temp.size() - 1; i++) {
+            for (int j = 0; j < temp.size() - i - 1; j++) {
+                if (temp.get(j).getKey() < temp.get(j + 1).getKey()) {
+                    BNode aux = temp.get(j);
+                    temp.set(j, temp.get(j + 1));
+                    temp.set(j + 1, aux);
+                }
+            }
+        }
+    }
+
     //========= Getter & Setter =========
     public BNode getRoot(){
         return root;
@@ -209,13 +250,4 @@ public class AVLTree{
         this.root = root;
     }
 
-    //exibição
-
-    private void posOrder(BNode no){
-        if(no != null){
-            posOrder(no.getLeft());
-            posOrder(no.getRight());
-            no.exibir();
-        }
-    }
 }

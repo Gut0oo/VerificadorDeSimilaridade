@@ -1,8 +1,5 @@
 package model;
 
-import Docs.ComparadorDeDocumentos;
-import Docs.Documento;
-
 public class Resultado {
     private double similaridade;
     private String doc1, doc2; //nome dos arquivos que foram comparados
@@ -28,6 +25,6 @@ public class Resultado {
 
     @Override
     public String toString(){
-        return getDoc1() + " <-> " + getDoc2() + "  = " + getSimilaridade() + "\n";
+        return getDoc1() + " <-> " + getDoc2() + "  = " + String.format("%.2f", getSimilaridade()) + "\n";
     }
 }
