@@ -1,23 +1,23 @@
 # Verificador de Similaridade de Textos com Hash e AVL
 ---
 
-## Descrição
+## 🔹Descrição
 Este projeto propõe o desenvolvimento de um sistema robusto e eficiente para identificar o grau de similaridade entre documentos textuais. A tarefa de detecção de similaridade é crucial em diversas aplicações de ciência da computação, como a detecção de plágio acadêmico
 
-## Funcionalidades
+## 🔹Funcionalidades
 
 -  Exibir todos os pares com similaridade acima de um limiar informado pelo usuário;
 -  Exibir apenas os K pares mais semelhantes, sendo o K informado pelo usuário;
 -  Comparar dois arquivos específicos, informados pelo usuário.
 
 
-## Ferramentas
+## 🔹Ferramentas
 
 - Linguagem Java
 - VisualStudio code
 
 
-## Execução
+## 🔹Execução
 
 - Trocar o diretório atual para o diretório ***src***
 ~~~
