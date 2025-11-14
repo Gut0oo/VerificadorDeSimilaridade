@@ -24,7 +24,7 @@ public class HashTable{
             resize();
         }
 
-        int index = metodoDivisao(palavra); //calcula o indice a ser inserido
+        int index = metodoMultiplicacao(palavra); //calcula o indice a ser inserido
 
         for(Node no : tabelaHash[index]){
             if(no.getPalavra().equals(palavra)){ //Aqui verfica se já existe o nó 
@@ -42,7 +42,7 @@ public class HashTable{
     }
 
     public Node get(String palavra){
-        int index = metodoDivisao(palavra); //Pega o index que está a palavra
+        int index = metodoMultiplicacao(palavra); //Pega o index que está a palavra
         int tam = tabelaHash[index].size();
 
         Node no = null;
