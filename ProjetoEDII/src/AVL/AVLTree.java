@@ -73,6 +73,12 @@ public class AVLTree{
         return null;//Se não encontro, retorna null
     }
 
+
+
+
+
+
+   //----------------------------------------TOPK----------------------------------------
     private void searchTopK(double limiar, BNode no, ArrayList<BNode> temp ){
         if(no != null){
             searchTopK(limiar, no.getLeft(), temp);
@@ -94,16 +100,28 @@ public class AVLTree{
         ArrayList<BNode> temp = new ArrayList<>();
         searchTopK(limiar, root, temp);
 
-        inverterOrdem(temp); //coloca na ordem decrescente
-        int max = Math.min(k, temp.size()); //pega o maximo que será impresso
+        ArrayList<Resultado> resultados = coletarResultados(temp);
 
+        ordenarResultados(resultados); // ordem decrescente
+
+        int max = Math.min(k, resultados.size());
+
+        System.out.println("temp.size() = " + temp.size());
+        System.out.println("k = " + k);
+        System.out.println("max = " + max);
+        
         sb.append("\n=== VERFICADOR DE SIMILARIDADE DE TEXTOS ===\n");
         for(int i = 0; i < max; i++){
-            sb.append((temp.get(i).getResultadosComoTexto())).append("\n");
+            sb.append(resultados.get(i).toString()).append("\n");
         }
         sb.append("Métrica de Similaridade: Cosseno\n");
     }
 
+
+
+
+
+    //----------------------------------------Lista----------------------------------------
     public void searchLista(double similaridade, BNode no, StringBuilder sb){ //Esse search vai ser para buscar os nós com maiores similaridade 
         if(no != null){
             searchLista(similaridade, no.getLeft(), sb);
@@ -229,18 +247,19 @@ public class AVLTree{
         no.setFB(getBalance(no));
     }
 
-    public void inverterOrdem(ArrayList<BNode> temp){//metodo para inverter a ordem
-        for (int i = 0; i < temp.size() - 1; i++) {
-            for (int j = 0; j < temp.size() - i - 1; j++) {
-                if (temp.get(j).getKey() < temp.get(j + 1).getKey()) {
-                    BNode aux = temp.get(j);
-                    temp.set(j, temp.get(j + 1));
-                    temp.set(j + 1, aux);
-                }
-            }
-        }
+    public void ordenarResultados(ArrayList<Resultado> lista) {
+        lista.sort((a, b) -> Double.compare(b.getSimilaridade(), a.getSimilaridade()));
     }
 
+    public ArrayList<Resultado> coletarResultados(ArrayList<BNode> nos) {
+        ArrayList<Resultado> lista = new ArrayList<>();
+
+        for (BNode no : nos) {
+            lista.addAll(no.getArrResult()); // pega todos os resultados do nó
+        }
+
+        return lista;
+    }
     //========= Getter & Setter =========
     public BNode getRoot(){
         return root;
@@ -249,5 +268,7 @@ public class AVLTree{
     public void setRoot(BNode root){
         this.root = root;
     }
+
+    
 
 }

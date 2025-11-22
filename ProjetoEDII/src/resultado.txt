@@ -1,5 +1,13 @@
-=== VERFICADOR DE SIMILARIDADE DE TEXTOS ===
-./documentos/doc1.txt <-> ./documentos/doc2.txt  = 0.40
 
-Similariade Calculada: 0.40
+=== VERFICADOR DE SIMILARIDADE DE TEXTOS ===
+./documentos/doc3.txt <-> ./documentos/doc1.txt  = 1.00
+
+./documentos/doc2.txt <-> ./documentos/doc4.txt  = 1.00
+
+./documentos/doc5.txt <-> ./documentos/doc2.txt  = 0.57
+
+./documentos/doc5.txt <-> ./documentos/doc4.txt  = 0.57
+
+./documentos/doc3.txt <-> ./documentos/doc2.txt  = 0.40
+
 Métrica de Similaridade: Cosseno

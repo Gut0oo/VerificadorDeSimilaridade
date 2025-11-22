@@ -86,4 +86,17 @@ public class BNode{
         }
         return sb.toString();
     }
+
+
+    public ArrayList<Resultado> coletarResultados(ArrayList<BNode> nos) {
+        ArrayList<Resultado> lista = new ArrayList<>();
+
+        for (BNode no : nos) {
+            for (Resultado r : no.result) {
+                lista.add(r);
+            }
+        }
+
+        return lista;
+    }
 }
