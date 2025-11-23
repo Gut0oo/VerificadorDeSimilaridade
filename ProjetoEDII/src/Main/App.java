@@ -1,5 +1,9 @@
 package Main;
 
+//ALUNOS             RA
+// Gustavo Melo Silva 10438415
+// Marcus Ruiz Nishimura Baena 10426044
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,7 +97,7 @@ public class App {
         File[] arquivos = pasta.listFiles();
         
         if(arquivos.length == 0 || arquivos == null){
-            System.out.println();
+            System.out.println("Falta de arquivos");
             return;
         }
 
