@@ -1,13 +1,43 @@
-
 === VERFICADOR DE SIMILARIDADE DE TEXTOS ===
-./documentos/doc3.txt <-> ./documentos/doc1.txt  = 1.00
+Total de documentos processados: 5
+Total de pares comparados: 10
+Função hash utilizada: Multiplicação
+Métrica de Similaridade: Cosseno
+Tamanho da tabela hash: 101
+Total de colisões na HashTable: 3
 
-./documentos/doc2.txt <-> ./documentos/doc4.txt  = 1.00
+Pares com similaridade >= 0.1:
+--------------------------------------
+./documentos/doc3.txt <-> ./documentos/doc5.txt  = 0.28
+
+./documentos/doc5.txt <-> ./documentos/doc1.txt  = 0.28
+
+./documentos/doc3.txt <-> ./documentos/doc2.txt  = 0.40
+
+./documentos/doc3.txt <-> ./documentos/doc4.txt  = 0.40
+
+./documentos/doc1.txt <-> ./documentos/doc2.txt  = 0.40
+
+./documentos/doc1.txt <-> ./documentos/doc4.txt  = 0.40
 
 ./documentos/doc5.txt <-> ./documentos/doc2.txt  = 0.57
 
 ./documentos/doc5.txt <-> ./documentos/doc4.txt  = 0.57
 
-./documentos/doc3.txt <-> ./documentos/doc2.txt  = 0.40
+./documentos/doc3.txt <-> ./documentos/doc1.txt  = 1.00
 
-Métrica de Similaridade: Cosseno
+./documentos/doc2.txt <-> ./documentos/doc4.txt  = 1.00
+
+
+Pares com menor similariade:
+--------------------------------------
+./documentos/doc3.txt <-> ./documentos/doc5.txt  = 0.28
+
+./documentos/doc5.txt <-> ./documentos/doc1.txt  = 0.28
+
+
+--- Estatísticas da AVL ---
+Rotação Simples Esquerda (LL): 1
+Rotação Simples Direita (RR): 1
+Rotação Dupla Esquerda-Direita (LR): 0
+Rotação Dupla Direita-Esquerda (RL): 1

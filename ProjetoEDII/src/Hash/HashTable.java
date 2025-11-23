@@ -24,7 +24,7 @@ public class HashTable{
             resize();
         }
 
-        int index = metodoMultiplicacao(palavra); //calcula o indice a ser inserido
+        int index = metodoDivisao(palavra); //calcula o indice a ser inserido
 
         for(Node no : tabelaHash[index]){
             if(no.getPalavra().equals(palavra)){ //Aqui verfica se já existe o nó 
@@ -42,7 +42,7 @@ public class HashTable{
     }
 
     public Node get(String palavra){
-        int index = metodoMultiplicacao(palavra); //Pega o index que está a palavra
+        int index = metodoDivisao(palavra); //Pega o index que está a palavra
         int tam = tabelaHash[index].size();
 
         Node no = null;
@@ -104,9 +104,12 @@ public class HashTable{
             hash = (31 * hash) + dado.charAt(i); //31 eh primo, assim dando uma melhor dispersão 
         }//o numero primo eh mlr pq não tem divisores alem de 1 e ele mesmo, assim evitando padrões de repetição
 
-
+        hash = Math.abs(hash);
         double parteFrac = (hash * A) % 1; //pega a parte fracionaria
 
+        if (parteFrac < 0) {
+            parteFrac += 1; 
+        }
         return (int) (tam * parteFrac);
     }
 

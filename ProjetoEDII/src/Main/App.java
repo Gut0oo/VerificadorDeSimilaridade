@@ -20,11 +20,20 @@ public class App {
         StringBuilder sb = new StringBuilder();
 
 
+        int totalColisoes = 0;
+        int tamanhoTabela = 0;
+        for (Documento d : docs) {
+            totalColisoes += d.getTabelaHash().getContColisao();
+            tamanhoTabela = d.getTabelaHash().getTam(); 
+        }
+
         sb.append("=== VERFICADOR DE SIMILARIDADE DE TEXTOS ===\n");
         sb.append("Total de documentos processados: " + docs.size() + "\n");
         sb.append("Total de pares comparados: " + count + "\n");
-        sb.append("Função hash utilizada: \n");
+        sb.append("Função hash utilizada: Divisão\n");
         sb.append("Métrica de Similaridade: Cosseno\n");
+        sb.append("Tamanho da tabela hash: " + tamanhoTabela + "\n");
+        sb.append("Total de colisões na HashTable: " + totalColisoes + "\n");
 
         sb.append("\nPares com similaridade >= " + simi + ":\n");
         sb.append("--------------------------------------\n");
@@ -38,6 +47,12 @@ public class App {
         if (menor != null) {
             sb.append(menor.getResultadosComoTexto());
         }
+
+        sb.append("\n--- Estatísticas da AVL ---\n");
+        sb.append("Rotação Simples Esquerda (LL): " + arvore.getRotLL() + "\n");
+        sb.append("Rotação Simples Direita (RR): " + arvore.getRotRR() + "\n");
+        sb.append("Rotação Dupla Esquerda-Direita (LR): " + arvore.getRotLR() + "\n");
+        sb.append("Rotação Dupla Direita-Esquerda (RL): " + arvore.getRotRL() + "\n");
 
         String resultadoFinal = sb.toString();
         System.out.println(resultadoFinal);

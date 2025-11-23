@@ -6,6 +6,10 @@ import model.Resultado;
 
 public class AVLTree{
     private BNode root;
+    private int rotLL = 0;  //Rotação simples esquerda
+    private int rotRR = 0;  //Rotação simples direita
+    private int rotLR = 0;  //Rotação esquerda direita
+    private int rotRL = 0;  //Rotação direita esquerda
 
     public AVLTree(){ //inicializa a arvore vazia
         this.root = null;
@@ -146,6 +150,7 @@ public class AVLTree{
     //========= Metodos para Rotação =========
     //O parametro "no" é a raiz da subarvore que precisa ser balanceada
     public BNode rotateRight(BNode no){
+        rotRR++;
         System.out.println("→ Rotação Simples à Direita (RR)");
         boolean ehraiz = no.isRoot();
 
@@ -169,6 +174,7 @@ public class AVLTree{
     }
 
     public BNode rotateLeft(BNode no){
+        rotLL++;
         System.out.println("→ Rotação Simples à Esquerda (LL)");
         boolean ehraiz = no.isRoot();
 
@@ -191,12 +197,14 @@ public class AVLTree{
     }
 
     public BNode rotateLeftRight(BNode no){
+        rotLR++;
         System.out.println("→ Rotação Dupla Esquerda-Direita (LR)");
         no.setLeft(rotateLeft(no.getLeft()));
         return rotateRight(no);
     }
 
     public BNode rotateRightLeft(BNode no){
+        rotRL++;
         System.out.println("→ Rotação Dupla Direita-Esquerda (RL)");
         no.setRight(rotateRight(no.getRight()));
         return rotateLeft(no);
@@ -268,6 +276,11 @@ public class AVLTree{
     public void setRoot(BNode root){
         this.root = root;
     }
+
+    public int getRotLL() { return rotLL; }
+    public int getRotRR() { return rotRR; }
+    public int getRotLR() { return rotLR; }
+    public int getRotRL() { return rotRL; }
 
     
 
